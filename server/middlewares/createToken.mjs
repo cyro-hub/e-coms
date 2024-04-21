@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
-import asyncHandler from "../middlewares/asyncHandler.mjs";
+import asyncHandler from "./asyncHandler.mjs";
 
-export default asyncHandler(async (res, customerId) => {
-  const token = jwt.sign({customerId}, process.env.JWT_SECRET, {
+export default asyncHandler(async (res, id) => {
+  const token = jwt.sign({id}, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
   });
 
