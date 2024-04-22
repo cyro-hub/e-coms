@@ -89,7 +89,9 @@ const addCategoryImage = asyncHandler(async (req, res) => {
         });
       } else if (req.file) {
         const imageLocation = `/${req.file.path}`;
-        const imageUrl = `${req.protocol}://${req.get("host")}${imageLocation}`;
+        const imageUrl = `${req.protocol}://${req.get(
+          "host"
+        )}${imageLocation.replace("/dist", "")}}`;
 
         category.thumbnail = imageUrl;
 

@@ -1,0 +1,4 @@
+mongodb+srv://cyro:<password>@cluster0.jut9qor.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+
+mongodb+srv://cyro:<password>@cluster0.jut9qor.mongodb.net/

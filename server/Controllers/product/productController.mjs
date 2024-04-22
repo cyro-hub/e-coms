@@ -307,8 +307,9 @@ const addProductImages = asyncHandler(async (req, res) => {
         });
       } else if (req.file) {
         const imageLocation = `/${req.file.path}`;
-        const imageUrl = `${req.protocol}://${req.get("host")}${imageLocation}`;
-
+        const imageUrl = `${req.protocol}://${req.get(
+          "host"
+        )}${imageLocation.replace("/dist", "")}`;
         product.images.push(imageUrl);
 
         await product.save();
@@ -341,7 +342,9 @@ const addProductThumbnail = asyncHandler(async (req, res) => {
         });
       } else if (req.file) {
         const imageLocation = `/${req.file.path}`;
-        const imageUrl = `${req.protocol}://${req.get("host")}${imageLocation}`;
+        const imageUrl = `${req.protocol}://${req.get(
+          "host"
+        )}${imageLocation.replace("/dist", "")}}`;
 
         product.thumbnail = imageUrl;
 

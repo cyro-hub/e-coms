@@ -1,3 +1,5 @@
+/** @format */
+
 // import multer from "multer";
 // import path from "path";
 
@@ -23,7 +25,7 @@ import multer from "multer";
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     // console.log(file);
-    cb(null, "public/uploads/");
+    cb(null, "uploads/");
   },
 
   filename: (req, file, cb) => {
