@@ -6,8 +6,9 @@
   "type": "module",
   "scripts": {
     "client": "npm run dev --prefix client",
-    "server": "nodemon main.mjs",
-    "dev": "concurrently \"npm run client\" \"npm run server\""
+    "server": "nodemon index.mjs",
+    "dev": "concurrently \"npm run client\" \"npm run server\"",
+    "start": "node index.mjs"
   },
   "keywords": [],
   "author": "",
