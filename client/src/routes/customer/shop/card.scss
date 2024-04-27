@@ -1,0 +1,29 @@
+/** @format */
+
+// .card-name {
+// }
+
+.product-card:hover {
+  position: relative;
+  transition: all 0.5s ease-in-out;
+  img {
+    transform: scale(1.3);
+    z-index: 100;
+  }
+  .span-container {
+    bottom: -40px;
+    z-index: 10;
+    transform: translateY(40);
+  }
+  .cover {
+    position: absolute;
+    // background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 110%;
+    bottom: 0;
+    border-radius: 8px;
+  }
+  svg {
+    display: block;
+  }
+}

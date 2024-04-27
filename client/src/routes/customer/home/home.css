@@ -1,0 +1,28 @@
+.hero {
+  background-image: url("../../../../hero.jpg");
+  object-fit: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.hero-cover {
+  background-color: rgba(0, 0, 0, 0.658);
+}
+/* 
+.hero-title {
+font-size: 3em;
+line-height: 45px;
+}
+.hero-body{
+  width: 80%;
+  margin-top: 2em;
+  font-size: 1.125em;
+}
+.hero-image{
+  width: 25em;
+  height: 25em;
+  margin-top: 10rem;
+  filter: drop-shadow(10px 10px 20px black);
+  filter: contrast(120%);
+} */
