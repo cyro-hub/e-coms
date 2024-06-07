@@ -1,3 +1,5 @@
+/** @format */
+
 import * as React from "react";
 import {
   CaretSortIcon,
@@ -28,14 +30,14 @@ export const columns = [
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
+        aria-label='Select all'
       />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
+        aria-label='Select row'
       />
     ),
     enableSorting: false,
@@ -46,44 +48,47 @@ export const columns = [
     header: ({ column }) => {
       return (
         <Button
-          variant="ghost"
+          variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Names
-          <CaretSortIcon className="ml-2 h-4 w-4" />
+          Name
+          <CaretSortIcon className='ml-2 h-4 w-4' />
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("name")}</div>,
+    cell: ({ row }) => <div className='lowercase'>{row.getValue("name")}</div>,
   },
   {
     accessorKey: "brand",
     header: ({ column }) => {
       return (
         <Button
-          variant="ghost"
+          variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Brands
-          <CaretSortIcon className="ml-2 h-4 w-4" />
+          Brand
+          <CaretSortIcon className='ml-2 h-4 w-4' />
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("brand")}</div>,
+    cell: ({ row }) => {
+      const brand = row.getValue("brand")?.name;
+      return <div className='lowercase'>{brand}</div>;
+    },
   },
   {
     accessorKey: "category",
     header: ({ column }) => {
       return (
         <Button
-          variant="ghost"
+          variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Cateogories
-          <CaretSortIcon className="ml-2 h-4 w-4" />
+          Cateogory
+          <CaretSortIcon className='ml-2 h-4 w-4' />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const category = row.getValue("category").name;
-      return <div className="lowercase">{category}</div>;
+      const category = row.getValue("category")?.name;
+      return <div className='lowercase'>{category}</div>;
     },
   },
   {
@@ -91,15 +96,15 @@ export const columns = [
     header: ({ column }) => {
       return (
         <Button
-          variant="ghost"
+          variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
           Quantity
-          <CaretSortIcon className="ml-2 h-4 w-4" />
+          <CaretSortIcon className='ml-2 h-4 w-4' />
         </Button>
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("quantity")}</div>
+      <div className='lowercase'>{row.getValue("quantity")}</div>
     ),
   },
   {
@@ -107,15 +112,15 @@ export const columns = [
     header: ({ column }) => {
       return (
         <Button
-          variant="ghost"
+          variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Prices
-          <CaretSortIcon className="ml-2 h-4 w-4" />
+          Price
+          <CaretSortIcon className='ml-2 h-4 w-4' />
         </Button>
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{`${row.getValue("price")}kd`}</div>
+      <div className='lowercase'>{`${row.getValue("price")}kd`}</div>
     ),
   },
   {
@@ -127,27 +132,27 @@ export const columns = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">O</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
+            <Button variant='ghost' className='h-8 w-8 p-0'>
+              <span className='sr-only'>O</span>
+              <DotsHorizontalIcon className='h-4 w-4' />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align='end'>
             <DropdownMenuLabel>
-              <Link to={`/admin/products/view/${product._id}`}>
-                View product
+              <Link to={`/admin/product/${product._id}`}>View product</Link>
+            </DropdownMenuLabel>
+            <DropdownMenuLabel>
+              <Link to={`/admin/product/update/${product._id}`}>
+                update product
               </Link>
             </DropdownMenuLabel>
             <DropdownMenuLabel>
-              <UpdateProduct {...product} />
-            </DropdownMenuLabel>
-            <DropdownMenuLabel>
-              <Link to={`/admin/products/upload/${product._id}`}>
+              <Link to={`/admin/product/upload/${product._id}`}>
                 Add product image
               </Link>
             </DropdownMenuLabel>
             <DropdownMenuLabel>
-              <Link to={`/admin/products/thumbnail/${product._id}`}>
+              <Link to={`/admin/product/upload/thumbnail/${product._id}`}>
                 Add product thumbnail
               </Link>
             </DropdownMenuLabel>

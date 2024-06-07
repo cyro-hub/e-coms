@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useSelector } from "react-redux";
-import Navbar from "@/routes/customer/components/nav";
+import Navbar from "@/routes/customer/home/components/nav";
 import { useQuery } from "@tanstack/react-query";
 import { getCustomersOrders } from "@/api/order";
 import OrderDetails from "./orderDetails";

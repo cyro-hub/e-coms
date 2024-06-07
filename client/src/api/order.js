@@ -1,6 +1,6 @@
 /** @format */
 
-const URI_ORDER = "/api/order";
+const URI_ORDER = "/api/v1/order";
 
 export const createOrder = async (values) => {
   const result = await fetch(`${URI_ORDER}`, {

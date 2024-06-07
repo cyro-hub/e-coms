@@ -5,7 +5,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const getCategories = createAsyncThunk(
   "getCategories",
   async (category) => {
-    const result = await fetch("/api/category", {
+    const result = await fetch("/api/v1/category", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -1,16 +1,16 @@
 /** @format */
 
-const URI_PRODUCT = "/api/products";
+const URI_PRODUCT = "/api/v1/product";
 
 export const getProductById = async ({ pageParam, queryKey }) => {
-  const { productId } = queryKey[1];
-  const result = await fetch(`${URI_PRODUCT}/${productId}`);
+  const { id } = queryKey[1];
+  const result = await fetch(`${URI_PRODUCT}/${id}`);
 
   return result.json();
 };
 
 export const createProduct = async (product) => {
-  const result = await fetch(`${URI_PRODUCT}/`, {
+  const result = await fetch(`${URI_PRODUCT}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(product),

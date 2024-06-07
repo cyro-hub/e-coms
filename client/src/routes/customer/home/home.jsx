@@ -1,26 +1,24 @@
 /** @format */
 
 import React from "react";
-import Search from "../components/search";
 import "./home.css";
 import { Link } from "react-router-dom";
-import Navbar from "@/routes/customer/components/nav";
+import Navbar from "@/routes/customer/home/components/nav";
 import Footer from "../components/footer";
-import TopProducts from "./TopProducts";
-import NewProducts from "./NewProducts";
+import TopProducts from "./components/TopProducts";
+import NewProducts from "./components/NewProducts";
 import Discount from "./Discount";
-import Testimonial from "./Testimonial";
+import Testimonial from "./components/Testimonial";
 
 function home() {
   return (
     <>
       <Navbar />
       <div className='flex flex-col container'>
-        <Search />
-        <div className='hero h-[700px] w-[110vw] mt-[-130px] container ml-[-2rem]'></div>
-        <div className='hero-cover h-[700px] w-[100vw] absolute top-0 pt-40 flex justify-center items-center flex-col gap-4 container ml-[-2rem]'>
+        <div className='hero h-[700px] w-[100vw] absolute top-0 left-0 right-0 flex justify-center items-center'></div>
+        <div className='hero-cover h-[700px] w-[100vw] absolute top-0 left-0 pt-40 flex justify-center items-center flex-col gap-4'>
           <h1 className='text-wrap text-center text-6xl'>
-            Mordern Electronics, Best quality
+            Modern Electronics, Best quality
           </h1>
           <h5 className='max-w-[35em] text-center text-lg'>
             Discover top-notch electronics for every need. Stay connected with
@@ -36,7 +34,6 @@ function home() {
         <Discount />
         <TopProducts />
         <Testimonial />
-        
       </div>
       <Footer />
     </>

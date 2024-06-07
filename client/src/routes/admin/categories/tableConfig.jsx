@@ -18,6 +18,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Link, useNavigate } from "react-router-dom";
 
 export const columns = [
   {
@@ -72,11 +73,17 @@ export const columns = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>
-              <UpdateCategory category={category} />
+              <Link
+                to={`/admin/product/category/update/${category._id}/${category.name}`}>
+                Update
+              </Link>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuLabel>
-              <AddCategoryThumbnail {...category} />
+              <Link
+                to={`/admin/product/category/upload/${category._id}/${category.name}`}>
+                Upload thumbnail
+              </Link>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
           </DropdownMenuContent>

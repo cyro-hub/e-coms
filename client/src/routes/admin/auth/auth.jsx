@@ -8,7 +8,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useSelector, useDispatch } from "react-redux";
-import { ReloadIcon } from "@radix-ui/react-icons";
+// import { ReloadIcon } from "@radix-ui/react-icons";
 import { setAuthState } from "../../../redux/features/userSlice/user";
 import { toast } from "sonner";
 import moment from "moment";
@@ -143,7 +143,7 @@ function Login() {
               <div className="w-full flex justify-center items-center flex-col space-y-2">
                 {isLoading ? (
                   <Button className="bg-[#0a4203]" disabled>
-                    <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                    {/* <ReloadIcon className="mr-2 h-4 w-4 animate-spin" /> */}
                     Please wait
                   </Button>
                 ) : (

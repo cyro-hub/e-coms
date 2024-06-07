@@ -2,27 +2,22 @@
 
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MdPhotoCamera } from "react-icons/md";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { addCategoryThumbnail } from "@/api/category";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import Navbar from "../component/nav";
 
 export default function AddCategoryThumbnail({ _id }) {
   const [warning, setWarning] = useState("");
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
+  const navigate = useNavigate();
+  const { id, name } = useParams();
 
   const handleImageSelect = (e) => setImage(e.target.files[0]);
 
@@ -34,8 +29,11 @@ export default function AddCategoryThumbnail({ _id }) {
         setWarning(message);
         return;
       }
-      setImage(null);
       setSuccess(message);
+      setImage(null);
+      setTimeout(() => {
+        navigate("/admin/product/category");
+      }, 2000);
     },
   });
 
@@ -49,64 +47,69 @@ export default function AddCategoryThumbnail({ _id }) {
   });
 
   const onSubmit = async () => {
+    if (!image) return;
+
     const formData = new FormData();
     formData.append("image", image);
-
-    addCategoryThumbnailMutation.mutate({ body: formData, id: _id });
+    setIsLoading(true);
+    addCategoryThumbnailMutation.mutate({ body: formData, id: id });
   };
 
   return (
-    <Dialog>
-      <DialogTrigger>Add thumbnail</DialogTrigger>
-      <DialogContent className='sm:max-w-[425px] bg-[#000514]'>
-        <DialogHeader>
-          <DialogTitle>Add CategoryThumbnail</DialogTitle>
-          <DialogDescription>
-            Add categories thumbnail here. Click save when you're done.
-          </DialogDescription>
-        </DialogHeader>
-        <div className='grid gap-4 py-4'>
-          <p className='w-full text-center text-[#fa4700f1]'>{warning}</p>
-          <p className='w-full text-center text-green-500 '>{success}</p>
-          <div className='w-full flex flex-col justify-center items-center gap-4'>
-            <Label htmlFor='image'>
-              <div className='w-full flex justify-center items-center'>
-                {image ? (
-                  <img
-                    src={URL.createObjectURL(image)}
-                    alt='test'
-                    className='w-[300px] h-auto rounded-md'
-                  />
-                ) : (
-                  <MdPhotoCamera size={300} />
-                )}
-              </div>
-              <Input
-                type='file'
-                accept='image/jpeg, image/jpg'
-                className='hidden'
-                placeholder='image'
-                id='image'
-                onChange={handleImageSelect}
-              />
-            </Label>
+    <>
+      <Navbar />
+      <div className='flex flex-col container justify-center items-center gap-4 py-4'>
+        <header className='flex items-center justify-between'>
+          <h1 className='text-2xl font-bold'>Add Category Thumbnail</h1>
+        </header>
+        <p className='w-full text-center text-[#fa4700f1]'>{warning}</p>
+        <p className='w-full text-center text-green-500 '>{success}</p>
+        <div className='w-full flex flex-col justify-center items-center gap-4'>
+          <div className='w-full text-center'>
+            <h2 className='text-lg font-semibold text-gray-700'>
+              Category: {name}
+            </h2>
           </div>
-          <DialogFooter>
-            <div className='w-full flex justify-center items-center flex-col space-y-2'>
-              {isLoading ? (
-                <Button className='bg-[#0a4203]' disabled>
-                  <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />
-                  Please wait
-                </Button>
+          <Label htmlFor='image'>
+            <div className='w-full flex justify-center items-center'>
+              {image ? (
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt='test'
+                  className='w-[300px] h-auto rounded-md'
+                />
               ) : (
-                <Button className='bg-[#0a4203] w-[70%]' onClick={onSubmit}>
-                  save
-                </Button>
+                <MdPhotoCamera size={300} />
               )}
             </div>
-          </DialogFooter>
+            <Input
+              type='file'
+              accept='image/jpeg, image/jpg'
+              className='hidden'
+              placeholder='image'
+              id='image'
+              onChange={handleImageSelect}
+            />
+          </Label>
         </div>
-      </DialogContent>
-    </Dialog>
+        <Link
+          to='/admin/product/category'
+          className='text-blue-500 hover:underline'>
+          Back to Categories
+        </Link>
+        <div className='w-[50%] flex justify-center items-center flex-col space-y-2'>
+          {isLoading ? (
+            <Button className='bg-[#0a4203]' disabled>
+              <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />
+              Please wait
+            </Button>
+          ) : (
+            <Button className='bg-[#0a4203] w-[70%]' onClick={onSubmit}>
+              save
+            </Button>
+          )}
+        </div>
+      </div>
+    </>
   );
 }

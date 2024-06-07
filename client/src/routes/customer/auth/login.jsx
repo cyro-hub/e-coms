@@ -22,7 +22,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import Nav from "../components/nav-sm";
+import Nav from "@/routes/customer/home/components/nav";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import Footer from "@/routes/customer/components/footer";

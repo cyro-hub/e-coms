@@ -1,3 +1,5 @@
+/** @format */
+
 import * as yup from "yup";
 
 const categoryValidator = yup.object().shape({

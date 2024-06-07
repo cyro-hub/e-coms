@@ -2,17 +2,14 @@
 
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { ReloadIcon } from "@radix-ui/react-icons";
-import { Link, useNavigate, Outlet } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  Outlet,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -30,6 +27,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategories } from "../../../redux/features/categorySlice/category";
+import Navbar from "../component/nav";
+import { updateCategory } from "@/api/category";
+import { useMutation } from "@tanstack/react-query";
 
 const formSchema = z.object({
   name: z.string().min(8, {
@@ -38,10 +38,13 @@ const formSchema = z.object({
 });
 
 export default function UpdateCategory({ category }) {
-  const { name, _id } = category;
-  const [message, setMessage] = useState("");
+  const [warning, setWarning] = useState("");
+  const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { id, name } = useParams();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,92 +54,85 @@ export default function UpdateCategory({ category }) {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setMessage("");
+      setWarning("");
+      setSuccess("");
     }, 4000);
 
     return () => clearTimeout(timer);
   });
 
-  const onSubmit = async (values) => {
-    try {
-      setIsLoading(true);
-
-      const { category, message, success } = await fetch("/api/category", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: values.name,
-          categoryId: _id,
-        }),
-      }).then((res) => res.json());
-
-      if (success) {
-        form.reset();
-        dispatch(getCategories());
-      }
-      setMessage(message);
-    } catch (error) {
-      setMessage(error.message);
-    } finally {
+  const updateCategoryMutation = useMutation({
+    mutationFn: updateCategory,
+    onSuccess: ({ message, success }) => {
       setIsLoading(false);
-    }
+      if (!success) {
+        setWarning(message);
+        return;
+      }
+      setSuccess(message);
+      setTimeout(() => {
+        navigate("/admin/product/category");
+      }, 2000);
+    },
+  });
+
+  const onSubmit = async (values) => {
+    setIsLoading(true);
+    updateCategoryMutation.mutate({ ...values, id });
   };
 
   return (
-    <Dialog>
-      <DialogTrigger>Update Category</DialogTrigger>
-      <DialogContent className='sm:max-w-[425px] bg-[#000514]'>
-        <DialogHeader>
-          <DialogTitle>Update Category</DialogTitle>
-          <DialogDescription>
-            Update category here. Click save when you're done.
-          </DialogDescription>
-        </DialogHeader>
-        <div className='grid gap-4 py-4'>
-          <p className='w-full text-center text-[#ffffff80]'>{message}</p>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className='space-y-4 min-w-[250px] max-w-[420px] rounded-[10px] py-6 px-4 pt-10'>
-              <FormField
-                control={form.control}
-                name='name'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input type='text' placeholder='name' {...field} />
-                    </FormControl>
-                    {form.formState.errors.name ? (
-                      <FormMessage />
-                    ) : form.getValues().name === "" ? (
-                      <p className='h-5'></p>
-                    ) : (
-                      <FormDescription>Enter the category.</FormDescription>
-                    )}
-                  </FormItem>
-                )}
-              />
-              <DialogFooter>
-                <div className='w-full flex justify-center items-center flex-col space-y-2'>
-                  {isLoading ? (
-                    <Button className='bg-[#0a4203]' disabled>
-                      <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />
-                      Please wait
-                    </Button>
+    <>
+      <Navbar />
+      <div className='flex flex-col container justify-center items-center gap-4 py-4'>
+        <header className='flex items-center justify-between'>
+          <h1 className='text-2xl font-bold'>Update Category</h1>
+        </header>
+        <p className='w-full text-center text-[#fa4700f1]'>{warning}</p>
+        <p className='w-full text-center text-[#00771af1]'>{success}</p>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className='space-y-4 min-w-[250px] max-w-[420px] rounded-[10px] py-6 px-4 pt-10'>
+            <FormField
+              control={form.control}
+              name='name'
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input type='text' placeholder='name' {...field} />
+                  </FormControl>
+                  {form.formState.errors.name ? (
+                    <FormMessage />
+                  ) : form.getValues().name === "" ? (
+                    <p className='h-5'></p>
                   ) : (
-                    <Button className='bg-[#0a4203] w-[70%]' type='submit'>
-                      save
-                    </Button>
+                    <FormDescription></FormDescription>
                   )}
-                  <Outlet />
-                </div>
-              </DialogFooter>
-            </form>
-          </Form>
-        </div>
-      </DialogContent>
-    </Dialog>
+                </FormItem>
+              )}
+            />
+            <Link
+              to='/admin/product/category'
+              className='text-blue-500 hover:underline'>
+              Back to Categories
+            </Link>
+            <div className='w-full flex justify-center items-center flex-col space-y-2'>
+              {isLoading ? (
+                <Button className='bg-[#0a4203]' disabled>
+                  <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />
+                  Please wait
+                </Button>
+              ) : (
+                <Button className='bg-[#0a4203] w-[70%]' type='submit'>
+                  save
+                </Button>
+              )}
+              <Outlet />
+            </div>
+          </form>
+        </Form>
+      </div>
+    </>
   );
 }

@@ -1,3 +1,5 @@
+/** @format */
+
 import mongoose from "mongoose";
 const { ObjectId } = mongoose.Schema;
 
@@ -19,9 +21,9 @@ const productSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
     images: { type: Array, default: [] },
-    brand: { type: String, required: true },
     quantity: { type: Number, required: true },
-    category: { type: ObjectId, ref: "Categories", required: true },
+    category: { type: ObjectId, ref: "Category", required: true },
+    brand: { type: ObjectId, ref: "Brand", required: true },
     description: { type: String, required: true },
     reviews: [reviewSchema],
     rating: { type: Number, required: true, default: 0 },

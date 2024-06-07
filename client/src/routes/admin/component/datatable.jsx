@@ -1,3 +1,5 @@
+/** @format */
+
 ("use client");
 
 import * as React from "react";
@@ -63,23 +65,23 @@ export default function DataTable({
   const headers = table.getHeaderGroups()[0].headers;
 
   return (
-    <div className="w-full">
-      <div className="flex items-center py-4">
+    <div className='w-full'>
+      <div className='flex items-center py-4'>
         <Input
           placeholder={`Filter ${filterColumn}s...`}
           value={table.getColumn(filterColumn)?.getFilterValue() ?? ""}
           onChange={(event) =>
             table.getColumn(filterColumn)?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className='max-w-sm'
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto bg-transparent border">
-              Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
+            <Button variant='outline' className='ml-auto bg-transparent border'>
+              Columns <ChevronDownIcon className='ml-2 h-4 w-4' />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align='end'>
             {table
               .getAllColumns()
               .filter((column) => column.getCanHide())
@@ -87,7 +89,7 @@ export default function DataTable({
                 return (
                   <DropdownMenuCheckboxItem
                     key={column.id}
-                    className="capitalize"
+                    className='capitalize'
                     checked={column.getIsVisible()}
                     onCheckedChange={(value) =>
                       column.toggleVisibility(!!value)
@@ -99,7 +101,7 @@ export default function DataTable({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border">
+      <div className='rounded-md border'>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -126,21 +128,24 @@ export default function DataTable({
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}>
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
+                    {row.getVisibleCells().map((cell) => {
+                      // console.log(cell)
+                      return (
+                        <TableCell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      );
+                    })}
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
                   <TableCell
                     colSpan={columns.length}
-                    className="h-24 text-center">
+                    className='h-24 text-center'>
                     No results.
                   </TableCell>
                 </TableRow>
@@ -150,8 +155,8 @@ export default function DataTable({
                 {headers.map((header, index) => {
                   // console.log(header);
                   return (
-                    <td className="p-2" key={index}>
-                      <BeatLoader size={10} color="#fff" />
+                    <td className='p-2' key={index}>
+                      <BeatLoader size={10} color='#fff' />
                     </td>
                   );
                 })}
@@ -160,24 +165,24 @@ export default function DataTable({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
+      <div className='flex items-center justify-end space-x-2 py-4'>
+        <div className='flex-1 text-sm text-muted-foreground'>
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
-        <div className="space-x-2">
+        <div className='space-x-2'>
           <Button
-            variant="outline"
-            size="sm"
-            className="bg-transparent"
+            variant='outline'
+            size='sm'
+            className='bg-transparent'
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}>
             Previous
           </Button>
           <Button
-            variant="outline"
-            size="sm"
-            className="bg-transparent"
+            variant='outline'
+            size='sm'
+            className='bg-transparent'
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}>
             Next

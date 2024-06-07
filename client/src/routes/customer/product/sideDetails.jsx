@@ -21,7 +21,7 @@ function sideDetails({
   return (
     <>
       <div className='flex gap-4'>
-        <p className='text-lg'>{brand || "brand"}</p>
+        <p className='text-lg'>{brand?.name || "brand"}</p>
         <div className='flex gap-2 items-center'>
           {quantity > 0 ? (
             <>
@@ -40,10 +40,10 @@ function sideDetails({
         {[1, 2, 3, 4, 5].map((index) => (
           <FaStar
             key={index}
-            size={18}
+            size={15}
             className={`${
               rating >= index ? "text-yellow-500" : "text-gray-300"
-            } mx-1`}
+            } mx-[1px]`}
           />
         ))}
         <span className='px-4'>

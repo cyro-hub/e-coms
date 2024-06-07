@@ -5,18 +5,19 @@ import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getProductById } from "@/api/product";
 import Footer from "../components/footer";
-import Nav from "../components/nav-sm";
 import Images from "./images";
 import SideDetails from "./sideDetails";
 import Reviews from "./Reviews";
+import Nav from "../home/components/nav";
 
 function product() {
-  const { productId } = useParams();
+  const { id } = useParams();
 
   const { data, refetch } = useQuery({
-    queryKey: [`productId`, { productId }],
+    queryKey: [`productId`, { id }],
     queryFn: getProductById,
   });
+
 
   const { images } = data?.product ?? {};
 

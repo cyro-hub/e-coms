@@ -1,3 +1,5 @@
+/** @format */
+
 import * as yup from "yup";
 
 const productValidator = yup.object().shape({
@@ -6,11 +8,7 @@ const productValidator = yup.object().shape({
     .min(4, "Name must be at least 4 characters")
     .max(50, "Name must be less than 50 characters")
     .required("Name is required"),
-  brand: yup
-    .string()
-    .min(4, "Brand must be at least 4 characters")
-    .max(50, "Brand must be less than 50 characters")
-    .required("Brand is required"),
+  brand: yup.string().required("Brand is required"),
   description: yup
     .string()
     .min(10, "Description must be at least 10 characters")

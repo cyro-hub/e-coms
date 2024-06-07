@@ -37,9 +37,13 @@ export default function ProductImages({ images }) {
                 </div>
               </SwiperSlide>
             ))
-          : images.map((image) => (
-              <SwiperSlide key={image}>
-                <img src={image} alt={image} className='rounded-md' />
+          : images.map((image,index) => (
+              <SwiperSlide key={index}>
+                <img
+                  src={image}
+                  alt={image}
+                  className='rounded-md mix-blend-multiply'
+                />
               </SwiperSlide>
             ))}
       </Swiper>
@@ -60,8 +64,8 @@ export default function ProductImages({ images }) {
                 </div>
               </SwiperSlide>
             ))
-          : images.map((image) => (
-              <SwiperSlide key={image}>
+          : images.map((image, index) => (
+              <SwiperSlide key={index}>
                 <img src={image} alt={image} className='rounded-md' />
               </SwiperSlide>
             ))}

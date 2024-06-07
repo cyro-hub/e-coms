@@ -1,3 +1,5 @@
+/** @format */
+
 import mongoose, { Schema } from "mongoose";
 
 const customerSchema = new Schema(

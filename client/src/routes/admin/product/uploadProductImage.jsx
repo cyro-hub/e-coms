@@ -16,14 +16,14 @@ import { useQuery } from "@tanstack/react-query";
 import { getProductById } from "@/api/product";
 
 function uploadProductImage() {
-  const { productId } = useParams();
+  const { id } = useParams();
   const queryClient = useQueryClient();
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
 
   const { data, isError, isPending, isSuccess } = useQuery({
-    queryKey: ["product", { productId }],
+    queryKey: ["product", { id }],
     queryFn: getProductById,
   });
 
@@ -32,7 +32,7 @@ function uploadProductImage() {
     if (image) {
       formData.append("image", image);
       setIsLoading(true);
-      mutation.mutate({ body: formData, id: productId });
+      mutation.mutate({ body: formData, id: id });
     }
   };
 

@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import Nav from "../components/nav-sm";
+import Nav from "@/routes/customer/home/components/nav";
 import { handleGetCart } from "@/utils/utils";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/footer";
@@ -47,11 +47,20 @@ const FormSchema = z.object({
 export default function cart() {
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
+  const [screenSize, setScreenSize] = useState(window.innerWidth);
 
   useEffect(() => {
     const cartData = handleGetCart();
     setCartItems(cartData);
   }, []);
+
+  const checkScreenSize = () => setScreenSize(window.innerWidth);
+
+  useEffect(() => {
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => window.removeEventListener("resize", checkScreenSize);
+  });
 
   const form = useForm({
     resolver: zodResolver(FormSchema),
@@ -93,22 +102,24 @@ export default function cart() {
                   : `${cartItems.length} Item`}
               </h2>
             </div>
-            <div
-              className='mt-10 mb-5'
-              style={{ whiteSpace: "nowrap", overflowX: "auto" }}>
-              <h3 className='font-semibold text-gray-600 text-xs uppercase inline-block w-full sm:w-2/5'>
-                Product Details
-              </h3>
-              <h3 className='font-semibold text-center text-gray-600 text-xs uppercase inline-block w-full sm:w-1/5'>
-                Quantity
-              </h3>
-              <h3 className='font-semibold text-center text-gray-600 text-xs uppercase inline-block w-full sm:w-1/5'>
-                Price
-              </h3>
-              <h3 className='font-semibold text-center text-gray-600 text-xs uppercase inline-block w-full sm:w-1/5'>
-                Total
-              </h3>
-            </div>
+            {screenSize > 700 && (
+              <div
+                className='mt-10 mb-5'
+                style={{ whiteSpace: "nowrap", overflowX: "auto" }}>
+                <h3 className='font-semibold text-gray-600 text-xs uppercase inline-block w-full sm:w-2/5'>
+                  Product Details
+                </h3>
+                <h3 className='font-semibold text-center text-gray-600 text-xs uppercase inline-block w-full sm:w-1/5'>
+                  Quantity
+                </h3>
+                <h3 className='font-semibold text-center text-gray-600 text-xs uppercase inline-block w-full sm:w-1/5'>
+                  Price
+                </h3>
+                <h3 className='font-semibold text-center text-gray-600 text-xs uppercase inline-block w-full sm:w-1/5'>
+                  Total
+                </h3>
+              </div>
+            )}
             <div
               style={{
                 whiteSpace: "nowrap",
@@ -139,7 +150,7 @@ export default function cart() {
                     {(
                       cartItems.reduce(
                         (acc, item) =>
-                          item.quantity *
+                          item.qty *
                             (item.price -
                               (item.discount > 0 &&
                                 (item.discount / 100) * item.price)) +

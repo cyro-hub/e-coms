@@ -1,36 +1,42 @@
+/** @format */
+
 import React from "react";
 import DataTable from "../component/datatable";
 import { columns } from "./tableConfig";
-import Dialog from "./addProductPopUp";
 import Navbar from "../component/nav";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
 import { getAllProducts } from "@/api/product";
+import { Link } from "react-router-dom";
 
 function Products() {
-  const { data, isError, isPending, isSuccess } = useQuery({
+  const { data, error, isFetching, status } = useQuery({
     queryKey: ["products"],
     queryFn: getAllProducts,
   });
 
-  if (isError) {
+  if (error) {
     toast("Something happened, reload the page");
   }
 
   return (
     <>
       <Navbar />
-      <div className="container flex flex-col py-6">
-        <div className="flex">
-          <Dialog />
+      <div className='container flex flex-col py-6'>
+        <div className='flex'>
+          <Link
+            to='/admin/product/add'
+            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
+            Add Product
+          </Link>
         </div>
         <DataTable
           columns={columns}
-          data={isSuccess ? data.products : []}
+          data={status === "success" ? data?.products : []}
           filterColumn={"name"}
-          isLoading={isPending}
-          isError={isError}
+          isLoading={isFetching}
+          isError={error}
         />
       </div>
     </>

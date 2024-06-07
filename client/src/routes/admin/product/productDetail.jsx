@@ -27,7 +27,7 @@ function productDetail({
       </div>
       <div className="grid grid-cols-4 justify-center items-center gap-4">
         <span className="text-right italic text-xs">Brand</span>
-        <div className="col-span-3">{brand}</div>
+        <div className="col-span-3">{brand?.name}</div>
       </div>
       <div className="grid grid-cols-4 justify-center items-center gap-4">
         <span className="text-right italic text-xs">Category</span>
@@ -53,15 +53,15 @@ function productDetail({
         <span className="text-right italic text-xs">Updated At</span>
         <div className="col-span-3">{moment(updatedAt).format("LLLL")}</div>
       </div>
-      <div className="flex flex-col gap-4 h-[150px] overflow-auto no-scrollbar">
-        {images?.map((image) => {
+      {/* <div className="flex flex-col gap-4 h-[150px] overflow-auto no-scrollbar">
+        {images?.map((image,index) => {
           return (
-            <a href={image} target="blank" key={image}>
+            <a href={image} target="blank" key={index}>
               {image.split("/")[image.split("/").length - 1]}
             </a>
           );
         })}
-      </div>
+      </div> */}
     </>
   );
 }

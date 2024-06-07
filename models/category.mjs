@@ -13,11 +13,12 @@ const categorySchema = new Schema(
     },
     thumbnail: {
       type: String,
+      default: "",
     },
   },
   { timestamps: true }
 );
 
-const Category = mongoose.model("Categories", categorySchema);
+const Category = mongoose.model("Category", categorySchema);
 
 export default Category;

@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/form";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import Nav from "../components/nav-sm";
+import Nav from "@/routes/customer/home/components/nav";
 import { useMutation } from "@tanstack/react-query";
 
 const formSchema = z.object({

@@ -1,5 +1,5 @@
 /** @format */
-const URI_PRODUCT = "/api/customer";
+const URI_PRODUCT = "/api/v1/customer";
 
 export const loginCustomer = async (values) => {
   const result = await fetch(`${URI_PRODUCT}/auth`, {
